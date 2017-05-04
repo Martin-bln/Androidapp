@@ -163,8 +163,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         });
 
         initialUISetup();
-        int test = 0;
-        test ++;
     }
 
     public void initialUISetup() {
@@ -191,8 +189,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         //Toast.makeText(MainActivity.this, "RESUMED", Toast.LENGTH_LONG).show();
         BLOCKchecker = false;
         BLOCKsuche = false;
-
-
     }
 
     public void Settings(View view) {
@@ -201,11 +197,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
     public void setOEM(String OEMStr) {
         NameOEM = OEMStr;
-        //  Log.d("CLIENT setOEM", "|"+dropdownOEM+"|");
     }
     public void setInternetVerfuegbar(boolean InetChecker) {
         InternetVerfuegbar = InetChecker;
-
     }
     public void AuswertungInternetverbindung()
     {   isInternetOn();
@@ -219,7 +213,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             InternetOK.setBackgroundColor(RED);
             InternetOK.setTextColor(YELLOW);
         }
-
         handler.postDelayed(runnable, 5000);
     }
     boolean AbbruchChecker = true;
@@ -245,10 +238,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             }
         }, 1000); //delay
 
-
      handler2.postDelayed(runnable2, 10000);
-
-
     }
 
     public void Maschinenteil() {
@@ -303,7 +293,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         TextView Fehleranzeige = (TextView)findViewById(R.id.tv4);
         String Socketfehler = "Serversocket!";
         ZyklusChecker ++;
-        Toast.makeText(MainActivity.this, "Cycles: "+ZyklusChecker, Toast.LENGTH_LONG).show();
+        //Toast.makeText(MainActivity.this, "Cycles: "+ZyklusChecker, Toast.LENGTH_LONG).show();
 
        if (!BLOCKchecker){
         SocketPing = true;
@@ -341,38 +331,18 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private void Checker() throws InterruptedException {
         ImageButton Suche = (ImageButton) findViewById(BtnLupe);
         Suche.setEnabled(false);
-
-        // String sockethostname = hostname.getText().toString();
-      //  int Serverport = Integer.parseInt(hostportStr);
-        int Serverport = 6066;
-        //ClientThread client = new ClientThread();
         ClientThread client = new ClientThread();
-        //client2.setServerIp(hostnameStr);
-        /*client.setServerIp("192.168.178.38");
-        client.setServerport(Serverport);
-        client.setUsername("java");
-        client.setIMEI("359405053723621");*/
         client.setServerIp(hostnameStr);
         client.setServerport(Integer.parseInt(hostportStr));
         client.setUsername(usernameStr);
         client.setIMEI(IMEIStr);
         client.setZylkuszaehler(0);
-
-            //client.setHostname(sockethostname);
-       // client.setServerIp(hostnameStr);
-
-
-
         client.start();
         client.join();
             SocketPong = client.getPong();
             MySQLFehler = client.getMySQLFehler();
             Suche.setEnabled(true);
-
-
-
         }
-
 
     public void Suchen (View view) throws InterruptedException, SQLException {
         ListView ausgabe2 = (ListView) findViewById(R.id.lv_ausgabe);
@@ -415,14 +385,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             //Suche.setVisibility(View.INVISIBLE);
         if (!BLOCKsuche){
         client.start();
-
         client.join();
     //    if (SocketPing){
             SocketPong = client.getPong();
        }
-
-
-
         resultlist = null;
         int AnzahlDatensaetze = 0;
         ArrayList resultlist = client.getResult();
@@ -456,17 +422,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 this, android.R.layout.simple_list_item_1, resultlist);
 
 
-
-
         ausgabe2.setAdapter(adapter);
-
- ;
-
-
-
-
-
-
 
         //  SimpleAdapter sa = new SimpleAdapter(this, android.R.layout.simple_list_item_1, new String[] { "name", "price" }, new int[] {R.id.name, R.id.price });
 
@@ -581,14 +537,12 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         // get Connectivity Manager object to check connection
         ConnectivityManager connec =
                 (ConnectivityManager)getSystemService(getBaseContext().CONNECTIVITY_SERVICE);
-
         // Check for network connections
         if ( connec.getNetworkInfo(0).getState() == android.net.NetworkInfo.State.CONNECTED ||
                 connec.getNetworkInfo(0).getState() == android.net.NetworkInfo.State.CONNECTING ||
                 connec.getNetworkInfo(1).getState() == android.net.NetworkInfo.State.CONNECTING ||
                 connec.getNetworkInfo(1).getState() == android.net.NetworkInfo.State.CONNECTED ) {
             // if connected with internet
-            //Toast.makeText(this, " Connected ", Toast.LENGTH_LONG).show();
             setInternetVerfuegbar(true);
             return true;
         }
@@ -596,7 +550,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 connec.getNetworkInfo(0).getState() == android.net.NetworkInfo.State.DISCONNECTED ||
                         connec.getNetworkInfo(1).getState() == android.net.NetworkInfo.State.DISCONNECTED  ) {
 
-            //Toast.makeText(this, " Not Connected ", Toast.LENGTH_LONG).show();
             setInternetVerfuegbar(false);
             return false;
         }
@@ -604,12 +557,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 }
 
-
-
    class ClientThread extends Thread {
        int Zylkuszaehler  ;
-       private static int SERVERPORT = 6066;
-       private static String SERVER_IP = "192.168.178.38";
+       private static int SERVERPORT = 0;
+       private static String SERVER_IP = "";
        static int trigger = 1;
        private static final long serialVersionUID = 1L;
        private String UsernameDB = null;
@@ -680,11 +631,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                         out.writeUTF(socketOEMMaschine);
                         Log.d("DML SOCKET Typ", "|"+socketOEMMaschine+"|");
                     }
-
                         out.writeInt(trigger);
-                    
-
-
                     //Input
                     InputStream inFromServer = socket.getInputStream();
                     ObjectInputStream in;

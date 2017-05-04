@@ -95,4 +95,15 @@
         android:layout_alignParentRight="true"
         android:text="löschen" />
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/btn_save"
+        android:text="ACHTUNG Einstellungen sollten im Normalfall nicht gelöscht werden!"
+        android:textAlignment="center"
+        android:textIsSelectable="false" />
+
 </RelativeLayout>
