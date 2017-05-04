@@ -1,5 +1,6 @@
 package lange.martin.betapmmge_support;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -16,15 +17,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.Spinner;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,25 +31,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.OutputStream;
-import java.lang.reflect.Array;
 import java.net.InetAddress;
 import java.net.Socket;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 
 import static android.graphics.Color.BLUE;
 import static android.graphics.Color.RED;
@@ -87,7 +70,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     Runnable runnable = new Runnable() {
         public void run() {
             AuswertungInternetverbindung();
-
         }
     };
     Handler handler2 = new Handler();
@@ -181,7 +163,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     public void onResume() {
         super.onResume();  // Always call the superclass method first
         prefs = this.getSharedPreferences("prefsdateiEinstellungen" , MODE_PRIVATE);
-        prefseditor = prefs.edit();
+        //prefseditor = prefs.edit();
         IMEI ();
         hostnameStr = prefs.getString(KEYhostname, "Fehlerhafter Datensatz");
         hostportStr = prefs.getString(KEYhostport, "0000");
@@ -459,7 +441,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                // String getDropdownOEM = null;
                 Maschinenteil();
                Log.d("DML OIS SpinnerOEM1 ", "|"+SpinnerOEM+"|");
-
             }
             else{
                 //String Maschinenteil = adapterView.getItemAtPosition(pos).toString();
@@ -469,6 +450,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                Log.d("DML OIS SpinnerOEM2 ", "|"+SpinnerOEM+"|");
             }
     }
+    @SuppressLint("HardwareIds")
     public void IMEI (){
 
         TelephonyManager telephonyManager = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);

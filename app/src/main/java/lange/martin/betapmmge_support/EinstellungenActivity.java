@@ -1,10 +1,15 @@
 package lange.martin.betapmmge_support;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.telephony.TelephonyManager;
 import android.text.InputType;
 import android.view.View;
@@ -13,10 +18,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import static lange.martin.betapmmge_support.R.id.editTextUsername;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class EinstellungenActivity extends Activity implements View.OnClickListener {
-    Button btn_save, btn_read, btn_delete;
+    Button btn_save, btn_access, btn_delete;
     ///
     SharedPreferences prefs;
     SharedPreferences.Editor prefseditor;
@@ -32,6 +38,10 @@ public class EinstellungenActivity extends Activity implements View.OnClickListe
     final String KEYhostport = "hostport";
     final String KEYusername = "username";
     public static final String Name = "einstellungenKey";
+    //String zeitstempel = (new SimpleDateFormat("yy-MM-dd-HH-mm-ss").format(new java.util.Date()));
+    String zeitstempel = (new SimpleDateFormat("dd.MM.yyyy/HH:mm:ss").format(new java.util.Date()));
+
+
 
     public void setIMEIid(String IMEIidStr) {
         IMEIStr = IMEIidStr;
@@ -42,10 +52,10 @@ public class EinstellungenActivity extends Activity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.einstellungen);
         btn_save = (Button) findViewById(R.id.btn_save);
-        btn_read = (Button) findViewById(R.id.btn_read);
+        btn_access = (Button) findViewById(R.id.btn_access);
         btn_delete = (Button) findViewById(R.id.btn_delete);
         btn_save.setOnClickListener(this);
-        btn_read.setOnClickListener(this);
+        btn_access.setOnClickListener(this);
         btn_delete.setOnClickListener(this);
         hostname = (EditText) findViewById(R.id.editTextHostname);
         hostport = (EditText) findViewById(R.id.editTextPort);
@@ -62,25 +72,52 @@ public class EinstellungenActivity extends Activity implements View.OnClickListe
         hostname.setText(hostnameStr);
         hostport.setText(hostportStr);
         username.setText(usernameStr);
+        getVersionInfo();
     }
 
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.btn_read: {
-                hostnameStr = prefs.getString(KEYhostname, "Fehlerhafter Datensatz");
-                hostportStr = prefs.getString(KEYhostport, "Fehlerhafter Datensatz");
-                usernameStr = prefs.getString(KEYusername, "Fehlerhafter Datensatz");
+            case R.id.btn_access: {
 
-                        hostname.setText(hostnameStr);
-                        hostport.setText(hostportStr);
-                        username.setText(usernameStr);
-                        Toast.makeText(getApplicationContext(),"Eingaben geladen!", Toast.LENGTH_SHORT).show();
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("Bitte Autorisierungskennung eingeben!");
 
-
-
-
+// Set up the input
+                final EditText input = new EditText(this);
+// Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+                input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                builder.setView(input);
+// Set up the buttons
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String m_Text = "";
+                        m_Text = input.getText().toString();
+                        if (!m_Text.equals("T1 die Elite")){
+                            Toast.makeText(EinstellungenActivity.this, "Nicht authorisiert!", Toast.LENGTH_LONG).show();
+                            dialog.cancel();
+                            Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                            long pattern[] = {100, 1000, 200, 1000};
+                            v.vibrate(pattern, -1);
+                        }
+                            else {
+                            Toast.makeText(EinstellungenActivity.this, "Erfolgreich authorisiert!", Toast.LENGTH_LONG).show();
+                            Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                            long pattern[] = {100, 100,50,100};
+                            v.vibrate(pattern, -1);  // Vibration für 300
+                            MAIL();
+                            }
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                builder.show();
                 break;
             }
             case R.id.btn_save: {
@@ -120,6 +157,33 @@ public class EinstellungenActivity extends Activity implements View.OnClickListe
                 break;
             }
         }
+    }
+
+public void MAIL (){
+    Intent i = new Intent(Intent.ACTION_SEND);
+    i.setType("message/rfc822");
+    i.putExtra(Intent.EXTRA_EMAIL  , new String[]{"programmer@wir-sind-cool.org"});
+    i.putExtra(Intent.EXTRA_SUBJECT, "Zugangsberechtigung anfordern fuer E-Support App.");
+    i.putExtra(Intent.EXTRA_TEXT   , "Ein neuer Benutzer forderte am/um: "+ zeitstempel + " einen DB-Zugang an. "+ "Die IMEI lautet [" + IMEIStr + "] aus der App gesendet.");
+    try {
+        startActivity(Intent.createChooser(i, "Send mail..."));
+    } catch (android.content.ActivityNotFoundException ex) {
+        Toast.makeText(EinstellungenActivity.this, "Keine E-Mail Clients installiert.", Toast.LENGTH_SHORT).show();
+    }
+}
+    private void getVersionInfo() {
+        String versionName = "";
+        int versionCode = -1;
+        try {
+            PackageInfo packageInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+            versionName = packageInfo.versionName;
+            versionCode = packageInfo.versionCode;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        TextView textViewVersionInfo = (TextView) findViewById(R.id.tv_version);
+        textViewVersionInfo.setText(String.format("Version name = %s \nVersion code = %d", versionName, versionCode));
     }
 public void IMEI (){
 
