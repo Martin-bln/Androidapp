@@ -163,8 +163,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         });
 
         initialUISetup();
+        int test = 0;
+        test ++;
     }
-//testcommot
+
     public void initialUISetup() {
         CheckBox SucheCheckBox;
 
