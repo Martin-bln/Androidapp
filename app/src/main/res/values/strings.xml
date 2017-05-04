@@ -1,0 +1,58 @@
+<resources>
+    <string name="app_name">beta PMMG E-Support</string>
+    <string name="OK">OK</string>
+    <string name="suchbegriff">Suchbegriff</string>
+    <string name="Buttontext">Suche</string>
+    <string name="socketSuchbregriff" />
+
+    <string name="editTextHostname">hostname</string>
+    <string name="hostname">hostname</string>
+    <string name="vergleichOnItemSelectet">ITM</string>
+    <string name="saved_user_name" />
+    <string-array name="MaschinenherstellerArray">
+        <item>OEM?</item>
+        <item>Hauni</item>
+        <item>Focke</item>
+        <item>G.D.</item>
+        <item>ITM</item>
+
+
+    </string-array>
+
+
+    <string-array name="HauniArray">
+
+        <item>Protos PM</item>
+        <item>Protos M8</item>
+        <item>Protos 2</item>
+
+</string-array>
+    <string-array name="FockeArray">
+
+        <item>411</item>
+        <item>487</item>
+        <item>489</item>
+        <item>507</item>
+        <item>520</item>
+        <item>541</item>
+        <item>550</item>
+        <item>751</item>
+        <item>752</item>
+        <item>779</item>
+
+    </string-array>
+        <string-array name="GDArray">
+
+        <item>X3</item>
+        <item>C600</item>
+        <item>Pack-OW</item>
+        <item>Pack-B</item>
+        <item>FP</item>
+        <item>FFP</item>
+        <item>KQ</item>
+    </string-array>
+    <string-array name="leer">
+        <item>OEM-ID?</item>
+
+    </string-array>
+</resources>

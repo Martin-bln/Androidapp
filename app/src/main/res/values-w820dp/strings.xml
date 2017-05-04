@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="test">los</string>
+    <string name="OK">OK</string>
+    <string name="Suchbregriff">Ersatzteil Suchbegriff</string>
+    <string name="Buttontext">Suche</string>
+    <string name="socketSuchbregriff" />
+    <string name="hostname">hostname</string>
+</resources>

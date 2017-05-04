@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/tv3"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/tv2"
+        android:elevation="0dp"
+        android:text="MySQL-DB"
+        android:textAlignment="center" />
+
+    <EditText
+        android:id="@+id/suchbegriff"
+        android:layout_width="350dp"
+        android:layout_height="match_parent"
+        android:autoText="false"
+        android:editable="true"
+        android:enabled="true"
+        android:hint="Ersatzteil/Suchbegriff"
+        android:inputType="text"
+        android:maxLength="18"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:textAlignment="center"
+        android:visibility="visible"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_alignBottom="@+id/imageButton2" />
+
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textMultiLine"
+        android:ems="10"
+        android:id="@+id/ausgabe"
+        android:visibility="visible"
+        android:layout_below="@+id/Maschinenhersteller"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:id="@+id/Copyright"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_gravity="center"
+        android:enabled="true"
+        android:singleLine="true"
+        android:text="© M. Lange"
+        android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
+
+    <ImageButton
+        android:id="@+id/imageButton2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:elevation="0dp"
+        android:onClick="Settings"
+        android:src="@android:drawable/ic_menu_preferences" />
+
+    <ImageButton
+        android:id="@+id/BtnLupe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/suchbegriff"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:elevation="24dp"
+        android:onClick="Suchen"
+        android:src="@android:drawable/ic_menu_search" />
+
+    <Spinner
+        android:id="@+id/Maschinenhersteller"
+        android:layout_width="160dp"
+        android:layout_height="50dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/suchbegriff"
+        android:dropDownWidth="match_parent"
+        android:spinnerMode="dropdown"
+        android:visibility="visible" />
+
+    <Spinner
+        android:id="@+id/Maschinenteil"
+        android:layout_width="160dp"
+        android:layout_height="50dp"
+        android:layout_alignTop="@+id/Maschinenhersteller"
+        android:layout_toEndOf="@+id/Maschinenhersteller"
+        android:layout_toRightOf="@+id/Maschinenhersteller"
+        android:dropDownWidth="match_parent"
+        android:spinnerMode="dropdown"
+        android:visibility="visible" />
+
+    <CheckBox
+        android:id="@+id/unspezifischeSuche"
+        style="@android:style/Widget.CompoundButton.CheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_above="@+id/ausgabe"
+        android:layout_alignTop="@+id/Maschinenteil"
+        android:layout_toEndOf="@+id/Maschinenteil"
+        android:layout_toRightOf="@+id/Maschinenteil"
+        android:checked="false"
+        android:clickable="false"
+        android:onClick="Checkbox"
+        android:text="Wildcard-DB-Suche" />
+
+    <TextView
+        android:id="@+id/tv2"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/tv1"
+        android:elevation="0dp"
+        android:text="SOCKET-HB"
+        android:textAlignment="center" />
+
+    <TextView
+        android:id="@+id/tv1"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/BtnLupe"
+        android:elevation="0dp"
+        android:text="WWW"
+        android:textAlignment="center" />
+
+    <TextView
+        android:id="@+id/tv4"
+        android:layout_width="500dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:layout_below="@+id/ausgabe"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <ListView
+            android:id="@+id/lv_ausgabe"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+
+</RelativeLayout>
