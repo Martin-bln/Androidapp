@@ -64,7 +64,7 @@ public class EinstellungenActivity extends Activity implements View.OnClickListe
         prefs = this.getSharedPreferences("prefsdateiEinstellungen" , MODE_PRIVATE);
         prefseditor = prefs.edit();
         IMEI ();
-        IMEI.setText(IMEIStr+" (IMEI)");
+        IMEI.setText(IMEIStr);
         IMEI.setInputType(InputType.TYPE_NULL);
         hostnameStr = prefs.getString(KEYhostname, "Fehlerhafter Datensatz");
         hostportStr = prefs.getString(KEYhostport, "Fehlerhafter Datensatz");
@@ -183,7 +183,7 @@ public void MAIL (){
         }
 
         TextView textViewVersionInfo = (TextView) findViewById(R.id.tv_version);
-        textViewVersionInfo.setText(String.format("Version name = %s \nVersion code = %d", versionName, versionCode));
+        textViewVersionInfo.setText(String.format("V.Name= %s \nV.Code  = %d", versionName, versionCode));
     }
 public void IMEI (){
 
