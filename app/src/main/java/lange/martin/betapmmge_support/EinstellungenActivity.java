@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -50,10 +51,12 @@ public class EinstellungenActivity extends Activity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         setContentView(R.layout.einstellungen);
         btn_save = (Button) findViewById(R.id.btn_save);
         btn_access = (Button) findViewById(R.id.btn_access);
         btn_delete = (Button) findViewById(R.id.btn_delete);
+        btn_delete.setVisibility(View.INVISIBLE);
         btn_save.setOnClickListener(this);
         btn_access.setOnClickListener(this);
         btn_delete.setOnClickListener(this);
@@ -146,6 +149,7 @@ public class EinstellungenActivity extends Activity implements View.OnClickListe
                 break;
             }
             case R.id.btn_delete: {
+
                 prefseditor.remove(KEYhostname);
                 prefseditor.remove(KEYhostport);
                 prefseditor.remove(KEYusername);
